@@ -42,7 +42,7 @@ build_script:
     python setup.py install)
 
 test_script:
-  - pytest %APPVEYOR_BUILD_FOLDER%\tests\python_package_test
+  - pytest %APPVEYOR_BUILD_FOLDER%\tests
   - cd %APPVEYOR_BUILD_FOLDER%\examples\python-guide
   - ps: >-
       @("import matplotlib", "matplotlib.use('Agg')") + (Get-Content "plot_example.py") | Set-Content "plot_example.py"  # prevent interactive window mode
@@ -53,6 +53,4 @@ test_script:
         python $file
         if (!$?) { $host.SetShouldExit(-1) }
       }  # run all examples
-  - cd %APPVEYOR_BUILD_FOLDER%\examples\python-guide\notebooks
-  - conda install -q -y -n test-env ipywidgets notebook
-  - jupyter nbconvert --ExecutePreprocessor.timeout=180 --to notebook --execute --inplace *.ipynb  # run all notebooks
+
